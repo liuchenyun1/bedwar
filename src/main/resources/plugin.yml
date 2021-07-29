@@ -1,0 +1,17 @@
+name: Bedwar
+main: bedwar.Bedwar
+version: 1.0.0
+api-version: 1.16
+commands:
+  open:
+    description: open
+    usage: /<command>
+  init:
+    description: init
+    usage: /<command>
+  reset:
+    description: Reset Map
+    usage: /<command>
+  setCost:
+    description: setCost
+    usage: /<command> <material> <number> <i|g|e>

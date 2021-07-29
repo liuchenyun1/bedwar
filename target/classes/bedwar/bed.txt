@@ -1,0 +1,8 @@
+world 93 111 -35 world 94 111 -35 e
+world 93 111 35 world 94 111 35 e
+world 35 111 93 world 35 111 94 s
+world -35 111 93 world -35 111 94 s
+world -93 111 35 world -94 111 35 w
+world -93 111 -35 world -94 111 -35 w
+world -35 111 -93 world -35 111 -94 n
+world 35 111 -93 world 35 111 -94 n
