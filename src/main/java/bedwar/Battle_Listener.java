@@ -112,6 +112,7 @@ public class Battle_Listener implements Listener {
 				Bedwar.StartPoint.get(Bedwar.PlayerTeam.get(name)).getWorld().dropItem(Bedwar.StartPoint.get(Bedwar.PlayerTeam.get(name)),item);
 			});
 			event.getPlayer().getEnderChest().clear();
+			Bukkit.broadcastMessage("Contents of "+name+"'s Ender Chest have been dropped into their fountain");
 			return;
 		}
 		PlayerInventory inv = event.getPlayer().getInventory();

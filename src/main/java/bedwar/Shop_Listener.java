@@ -8,6 +8,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.Inventory;
@@ -15,6 +16,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class Shop_Listener implements Listener {
+	@EventHandler
+	void hurt(EntityDamageEvent event) {
+		if(event.getEntityType()==EntityType.VILLAGER) event.setCancelled(true);
+	}
+	
 	@EventHandler
 	void click(InventoryClickEvent event) {
 		if(!Bedwar.start) return;
