@@ -40,6 +40,26 @@ import org.bukkit.util.Vector;
 
 public class Battle_Listener implements Listener {
 	@EventHandler
+	void qwq(InventoryClickEvent event) {
+		ItemStack item=event.getCurrentItem();
+		if (item.getType() == Material.CHAINMAIL_LEGGINGS)
+			event.setCancelled(true);
+		if (item.getType() == Material.CHAINMAIL_BOOTS)
+			event.setCancelled(true);
+		if (item.getType() == Material.IRON_LEGGINGS)
+			event.setCancelled(true);
+		if (item.getType() == Material.IRON_BOOTS)
+			event.setCancelled(true);
+		if (item.getType() == Material.DIAMOND_LEGGINGS)
+			event.setCancelled(true);
+		if (item.getType() == Material.DIAMOND_BOOTS)
+			event.setCancelled(true);
+		if (item.getType() == Material.LEATHER_HELMET)
+			event.setCancelled(true);
+		if (item.getType() == Material.LEATHER_CHESTPLATE)
+			event.setCancelled(true);
+	}
+	@EventHandler
 	void death(EntityDeathEvent event) {
 		if (!Bedwar.start)
 			return;
