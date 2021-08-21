@@ -197,6 +197,7 @@ public class Bedwar extends JavaPlugin {
 				LAM.setColor(Leathercolor[in_use - 1]);
 				IS.setItemMeta(LAM);
 				player.getInventory().setChestplate(IS);
+				player.getEnderChest().clear();
 			}
 			Invincible.put(player.getName(),true);
 			FireChargeCold.put(player.getName(),false);

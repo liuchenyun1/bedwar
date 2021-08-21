@@ -107,8 +107,13 @@ public class Battle_Listener implements Listener {
 			return;
 		String name = event.getPlayer().getName();
 		event.getPlayer().setGameMode(GameMode.SPECTATOR);
-		if (Bedwar.over.get(name))
+		if (Bedwar.over.get(name)) {
+			event.getPlayer().getEnderChest().forEach(item->{
+				Bedwar.StartPoint.get(Bedwar.PlayerTeam.get(name)).getWorld().dropItem(Bedwar.StartPoint.get(Bedwar.PlayerTeam.get(name)),item);
+			});
+			event.getPlayer().getEnderChest().clear();
 			return;
+		}
 		PlayerInventory inv = event.getPlayer().getInventory();
 		new BukkitRunnable() {
 			public void run() {
@@ -374,10 +379,12 @@ public class Battle_Listener implements Listener {
 		try {
 			if(Bedwar.FireChargeCold.get(e.getPlayer().getName())) {
 				e.getPlayer().sendMessage("You have to wait 3 seconds after you use a fireball");
+				e.setCancelled(true);
 				return;
 			}
 			if (e.getAction() == Action.RIGHT_CLICK_AIR
 					&& e.getPlayer().getInventory().getItemInMainHand().getType() == Material.FIRE_CHARGE) {
+				Bukkit.getLogger().info(String.valueOf("fireball!"));
 				Vector direction = e.getPlayer().getEyeLocation().getDirection();
 				Projectile projectile = (Projectile) e.getPlayer().getWorld().spawn(
 						e.getPlayer().getEyeLocation().add(direction.getX(), direction.getY(), direction.getZ()),
@@ -390,13 +397,37 @@ public class Battle_Listener implements Listener {
 				} else {
 					e.getPlayer().getInventory().setItemInMainHand(new ItemStack(Material.AIR));
 				}
-				e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 1, 3));
+				e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 1, 1));
 				Bedwar.FireChargeCold.put(e.getPlayer().getName(),true);
 				new BukkitRunnable() {
 					public void run() {
 						Bedwar.FireChargeCold.put(e.getPlayer().getName(),false);
 					}
 				}.runTaskLater(Bukkit.getPluginManager().getPlugin("bedwar"),3*20);
+			}
+			if (e.getAction() == Action.RIGHT_CLICK_BLOCK
+					&& e.getPlayer().getInventory().getItemInMainHand().getType() == Material.FIRE_CHARGE) {
+				Bukkit.getLogger().info(String.valueOf("fireball!"));
+				Vector direction = e.getPlayer().getEyeLocation().getDirection();
+				Projectile projectile = (Projectile) e.getPlayer().getWorld().spawn(
+						e.getPlayer().getEyeLocation().add(direction.getX(), direction.getY(), direction.getZ()),
+						Fireball.class);
+				projectile.setShooter((LivingEntity) e.getPlayer());
+				projectile.setVelocity(direction);
+				if (e.getPlayer().getInventory().getItemInMainHand().getAmount() > 1) {
+					e.getPlayer().getInventory().setItemInMainHand(new ItemStack(Material.FIRE_CHARGE,
+							e.getPlayer().getInventory().getItemInMainHand().getAmount() - 1));
+				} else {
+					e.getPlayer().getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+				}
+				e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 1, 1));
+				Bedwar.FireChargeCold.put(e.getPlayer().getName(),true);
+				new BukkitRunnable() {
+					public void run() {
+						Bedwar.FireChargeCold.put(e.getPlayer().getName(),false);
+					}
+				}.runTaskLater(Bukkit.getPluginManager().getPlugin("bedwar"),3*20);
+				e.setCancelled(true);
 			}
 		} catch (NullPointerException nullPointerException) {
 		}
